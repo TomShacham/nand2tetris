@@ -43,7 +43,6 @@ class Parser
       end
     end
     # second pass
-    # p "label #{label} , number #{number} , binary #{to_16_bit_padded_number(number)} "
     @lines.map! do |line|
       if line[0] == "@"
         label = symbol line

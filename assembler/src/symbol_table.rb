@@ -2,7 +2,6 @@ class SymbolTable
   attr_accessor :table
 
   def initialize
-    @heap_pointer = 15
     @table = {
       "SP" => 0,
       "LCL" => 1,
