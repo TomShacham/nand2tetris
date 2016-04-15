@@ -1,5 +1,4 @@
 require_relative 'parser'
-require_relative 'symboltable'
 
 class Assembler
   attr_accessor :output
