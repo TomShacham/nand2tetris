@@ -14,9 +14,10 @@ class Parser
     @lines.map! do |line|
       case command_type line
       when :A_COMMAND || :L_COMMAND
-        ("%16.4s" % symbol(line).to_i.to_s(2)).gsub!(/\ /, "0")
+        ("%16.16s" % symbol(line).to_i.to_s(2)).gsub!(/\ /, "0")
       else
-        "1110"                            +
+        "111"                            +
+        what_is_a(line)                  +
         @codifier.codify_comp(comp line) +
         @codifier.codify_dest(dest line) +
         @codifier.codify_jump(jump line)
@@ -39,8 +40,24 @@ class Parser
       line[1..-1]
     end
 
+    def what_is_a line
+      if line.index("=")
+        if line[line.index("=") + 1 .. -1].include? "M"
+          "1"
+        else
+          "0"
+        end
+      else
+        "0"
+      end
+    end
+
     def comp line
-      line[line.index("=") + 1 .. -1]
+      if line.index("=")
+        line[line.index("=") + 1 .. -1]
+      else
+        line[0 .. line.index(";") - 1]
+      end
     end
 
     def dest line
