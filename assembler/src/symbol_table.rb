@@ -1,7 +1,8 @@
 class SymbolTable
-  attr_accessor :table
+  attr_accessor :table, :heap_counter
 
   def initialize
+    @heap_counter = 15
     @table = {
       "SP" => 0,
       "LCL" => 1,
@@ -20,6 +21,11 @@ class SymbolTable
   def add_entry symbol, pc
     return if contains? symbol
     @table[symbol] = pc
+  end
+
+  def add_var symbol
+    @heap_counter += 1
+    @table[symbol] = @heap_counter
   end
 
   def contains? symbol

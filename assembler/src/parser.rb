@@ -46,8 +46,13 @@ class Parser
     @lines.map! do |line|
       if line[0] == "@"
         label = symbol line
-        number = @symbol_table.get_address label
-        to_16_bit_padded_number number
+        if @symbol_table.contains? label
+          number = @symbol_table.get_address label
+          to_16_bit_padded_number number
+        else
+          number = @symbol_table.add_var label
+          to_16_bit_padded_number number
+        end
       else
         line
       end
